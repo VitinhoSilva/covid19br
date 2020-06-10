@@ -24,9 +24,9 @@ function carregaDados() {
     });
 }
 
-async function carregaGrafico() {
-    var ctx = document.getElementById('canvas').getContext('2d');
-    var config = {
+function carregaGraficoUf() {
+    let ctx = document.getElementById('graficoUfLinha').getContext('2d');
+    let config = {
         type: 'line',
         data: {
             labels: estados_ordenado,
@@ -55,7 +55,66 @@ async function carregaGrafico() {
         }
     };
 
+    let ctx2 = document.getElementById('graficoUfPizza').getContext('2d');
+    let config2 = {
+        type: 'doughnut',
+        //type: 'pie',
+        data: {
+            labels: estados_ordenado,
+            datasets: [{
+                data: casos_ordenado,
+                borderColor: '#ffffff',
+                    backgroundColor: [
+                    '#363636',
+                    '#191970',
+                    '#4169E1',
+                    '#008080',
+                    '#008000',
+                    '#BDB76B',
+                    '#DAA520',
+                    '#FF4500',
+                    '#A0522D',
+                    '#4B0082',
+                    '#FF00FF',
+                    '#FF0000',
+                    '#FFD700',
+                    '#D8BFD8',
+                    '#4682B4',
+                    '#48D1CC',
+                    '#98FB98',
+                    '#3CB371',
+                    '#B8860B',
+                    '#BC8F8F',
+                    '#CD853F',
+                    '#FFDEAD',
+                    '#7B68EE',
+                    '#9932CC',
+                    '#A52A2A',
+                    '#FFD700',
+                    '#B0E0E6'
+                ],
+            }]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Casos por UF'
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+        }
+    };
+
     window.onload = function() {
         window.myLine = new Chart(ctx, config);
+        window.myPie = new Chart(ctx2, config2);
     };
+
 }
