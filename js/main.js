@@ -1,4 +1,4 @@
-var dados,  estados_casos = [], estados_ordenado = [], casos_ordenado = [], recuperados, confirmados, ativos, obitos;
+var confirmados = [], confirmados_uf = [], confirmados_casos = [], obitos = [], obitos_uf = [], obitos_casos = [], suspeitos = [], suspeitos_uf = [], suspeitos_casos = [], recuperado, confirmado, ativo, suspeito;
 
 function carregaDados() {
     $.ajax({
@@ -7,14 +7,28 @@ function carregaDados() {
         contentType: 'application/json',
         success: function (result) {
             for (let i = 0; i < result.data.length; i++) {
-                estados_casos.push([result.data[i].uf, result.data[i].cases]);
+                confirmados.push([result.data[i].uf, result.data[i].cases]);
+                obitos.push([result.data[i].uf, result.data[i].deaths]);
+                suspeitos.push([result.data[i].uf, result.data[i].suspects]);
             }
 
-            estados_casos.sort();
+            confirmados.sort();
+            suspeitos.sort();
+            obitos.sort();
 
-            for (let i = 0; i < estados_casos.length; i++) {
-                estados_ordenado.push(estados_casos[i][0]);
-                casos_ordenado.push(estados_casos[i][1]);
+            for (let i = 0; i < confirmados.length; i++) {
+                confirmados_uf.push(confirmados[i][0]);
+                confirmados_casos.push(confirmados[i][1]);
+            }
+
+            for (let i = 0; i < suspeitos.length; i++) {
+                suspeitos_uf.push(suspeitos[i][0]);
+                suspeitos_casos.push(suspeitos[i][1]);
+            }
+
+            for (let i = 0; i < obitos.length; i++) {
+                obitos_uf.push(obitos[i][0]);
+                obitos_casos.push(obitos[i][1]);
             }
 
         }, error: function (error) {
@@ -25,27 +39,28 @@ function carregaDados() {
     });
 }
 
-function carregaDadosGeralBr() { 
+function carregaDadosGeralBr() {
     $.ajax({
         url: 'https://covid19-brazil-api.now.sh/api/report/v1/brazil',
         type: 'GET',
         contentType: 'application/json',
         success: function (result) {
-                if (result.data.cases) {
-                    ativos = result.data.cases;
-                }
+            if (result.data.cases) {
+                ativo = result.data.cases;
+            }
 
-                if (result.data.confirmed) {
-                    confirmados = result.data.confirmed;
-                }
+            if (result.data.confirmed) {
+                confirmado = result.data.confirmed;
+            }
 
-                if (result.data.recovered) {
-                    recuperados = result.data.recovered;
-                }
+            if (result.data.recovered) {
+                recuperado = result.data.recovered;
+            }
 
-                if (result.data.deaths) {
-                    obitos = result.data.deaths;
-                }
+            if (result.data.deaths) {
+                suspeito = result.data.deaths;
+            }
+
 
         }, error: function (error) {
             console.error('ERRO AO CARREGAR DADOS EM https://covid19-brazil-api.now.sh/api/report/v1/brazil');
@@ -55,17 +70,17 @@ function carregaDadosGeralBr() {
     });
 }
 
-function carregaGraficoUf() {
-    let ctx = document.getElementById('graficoUfLinha').getContext('2d');
-    let config = {
+async function carregaGraficoConfirmadoUf() {
+    var ctx = document.getElementById('canvas').getContext('2d');
+    var config = {
         type: 'line',
         data: {
-            labels: estados_ordenado,
+            labels: confirmados_uf,
             datasets: [{
-                label: 'Casos por UF',
+                label: 'UF',
                 backgroundColor: '#1C1C1C',
                 borderColor: '#1C1C1C',
-                data: casos_ordenado,
+                data: confirmados_casos,
                 fill: false,
             }]
         },
@@ -73,7 +88,7 @@ function carregaGraficoUf() {
             responsive: true,
             title: {
                 display: true,
-                text: 'COVID-19'
+                text: 'CONFIRMADOS'
             },
             tooltips: {
                 mode: 'index',
@@ -86,51 +101,31 @@ function carregaGraficoUf() {
         }
     };
 
-    let ctx2 = document.getElementById('graficoUfPizza').getContext('2d');
-    let config2 = {
-        type: 'doughnut',
-        //type: 'pie',
+    window.onload = function () {
+        window.myLine = new Chart(ctx, config);
+    };
+}
+
+async function carregaGraficoSuspeitoUf() {
+    var ctx = document.getElementById('canvasBarSuspeitas').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
         data: {
-            labels: estados_ordenado,
+            labels: suspeitos_uf,
             datasets: [{
-                data: casos_ordenado,
-                borderColor: '#ffffff',
-                    backgroundColor: [
-                    '#363636',
-                    '#191970',
-                    '#4169E1',
-                    '#008080',
-                    '#008000',
-                    '#BDB76B',
-                    '#DAA520',
-                    '#FF4500',
-                    '#A0522D',
-                    '#4B0082',
-                    '#FF00FF',
-                    '#FF0000',
-                    '#FFD700',
-                    '#D8BFD8',
-                    '#4682B4',
-                    '#48D1CC',
-                    '#98FB98',
-                    '#3CB371',
-                    '#B8860B',
-                    '#BC8F8F',
-                    '#CD853F',
-                    '#FFDEAD',
-                    '#7B68EE',
-                    '#9932CC',
-                    '#A52A2A',
-                    '#FFD700',
-                    '#B0E0E6'
-                ],
+                label: 'UF',
+                data: suspeitos_casos,
+                backgroundColor: '#D2691E',
+                borderColor: '#D2691E',
+                fill: false
+               
             }]
         },
         options: {
             responsive: true,
             title: {
                 display: true,
-                text: 'Casos por UF'
+                text: 'CASOS SUSPEITOS'
             },
             tooltips: {
                 mode: 'index',
@@ -141,11 +136,39 @@ function carregaGraficoUf() {
                 intersect: true
             },
         }
-    };
+    });
+}
 
-    window.onload = function() {
-        window.myLine = new Chart(ctx, config);
-        window.myPie = new Chart(ctx2, config2);
-    };
-
+async function carregaGraficoObitoUf() {
+    var ctx = document.getElementById('canvasBarMortes').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: obitos_uf,
+            datasets: [{
+                label: 'UF',
+                data: obitos_casos,
+                backgroundColor: '#800000',
+                borderColor: '#800000',
+                fill: false
+               
+            }]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'MORTES'
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+        }
+        
+    });
 }

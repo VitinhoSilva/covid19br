@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,50 +14,74 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <style>
-       canvas{
-		-moz-user-select: none;
-		-webkit-user-select: none;
-		-ms-user-select: none;
-	}
-	.container {
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-        justify-content: center;
-    }
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
     </style>
-    <title>Painel Covid-19/BR</title>
+    <title>Painel Covid-19</title>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.html">Painel COVID-19/BR</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="index.html">Painel COVID-19</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">Sobre<span class="sr-only"></span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">Contato</a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Sobre<span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Contato</a>
+                </li>
             </ul>
         </div>
     </nav>
 
-    <div>
+
+    <div class="container">
         <div class="container">
-            <canvas id="graficoUfLinha" style="display:block; height: 250px;"></canvas>
-            <canvas id="graficoUfPizza" style="display:block; height: 400px; margin-top: 20px"></canvas>
+            <div style="width:100%;">
+                <canvas id="canvas"></canvas>
+            </div>
+        </div>
+
+        <div class="container" style="padding-top: 30px;">
+            <div style="width:100%;">
+                <canvas id="canvasBarSuspeitas"></canvas>
+            </div>
+        </div>
+
+        <div class="container" style="padding-top: 20px;">
+            <div style="width:100%;">
+                <canvas id="canvasBarMortes"></canvas>
+            </div>
+
         </div>
     </div>
 
     <script>
         carregaDados();
         carregaDadosGeralBr();
-        carregaGraficoUf();
+        carregaGraficoConfirmadoUf();
+        carregaGraficoSuspeitoUf();
+        carregaGraficoObitoUf();
     </script>
 </body>
+
+
+
+
+
+
+
+
+
+
+
+
 </html>
