@@ -71,8 +71,8 @@ function carregaDadosGeralBr() {
 }
 
 async function carregaGraficoConfirmadoUf() {
-    var ctx = document.getElementById('canvas').getContext('2d');
-    var config = {
+    let ctx = document.getElementById('canvas').getContext('2d');
+    let config = {
         type: 'line',
         data: {
             labels: confirmados_uf,
@@ -107,8 +107,8 @@ async function carregaGraficoConfirmadoUf() {
 }
 
 async function carregaGraficoSuspeitoUf() {
-    var ctx = document.getElementById('canvasBarSuspeitas').getContext('2d');
-    var myChart = new Chart(ctx, {
+    let ctx = document.getElementById('canvasBarSuspeitas').getContext('2d');
+    let myChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: suspeitos_uf,
@@ -125,7 +125,7 @@ async function carregaGraficoSuspeitoUf() {
             responsive: true,
             title: {
                 display: true,
-                text: 'CASOS SUSPEITOS'
+                text: 'SUSPEITOS'
             },
             tooltips: {
                 mode: 'index',
@@ -140,8 +140,8 @@ async function carregaGraficoSuspeitoUf() {
 }
 
 async function carregaGraficoObitoUf() {
-    var ctx = document.getElementById('canvasBarMortes').getContext('2d');
-    var myChart = new Chart(ctx, {
+    let ctx = document.getElementById('canvasBarMortes').getContext('2d');
+    let myChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: obitos_uf,
@@ -158,7 +158,7 @@ async function carregaGraficoObitoUf() {
             responsive: true,
             title: {
                 display: true,
-                text: 'MORTES'
+                text: 'ÓBITOS'
             },
             tooltips: {
                 mode: 'index',
