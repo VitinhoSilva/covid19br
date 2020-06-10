@@ -71,7 +71,7 @@ function carregaDadosGeralBr() {
 }
 
 async function carregaGraficoConfirmadoUf() {
-    let ctx = document.getElementById('canvas').getContext('2d');
+    let ctx = document.getElementById('graficoConfirmadoUf').getContext('2d');
     let config = {
         type: 'line',
         data: {
@@ -107,7 +107,7 @@ async function carregaGraficoConfirmadoUf() {
 }
 
 async function carregaGraficoSuspeitoUf() {
-    let ctx = document.getElementById('canvasBarSuspeitas').getContext('2d');
+    let ctx = document.getElementById('graficoSuspeitoUf').getContext('2d');
     let myChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -140,7 +140,7 @@ async function carregaGraficoSuspeitoUf() {
 }
 
 async function carregaGraficoObitoUf() {
-    let ctx = document.getElementById('canvasBarMortes').getContext('2d');
+    let ctx = document.getElementById('graficoObitoUf').getContext('2d');
     let myChart = new Chart(ctx, {
         type: 'line',
         data: {
