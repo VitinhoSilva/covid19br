@@ -1,4 +1,4 @@
-var dados, estados_casos = [], estados_ordenado = [], casos_ordenado = [];
+var dados,  estados_casos = [], estados_ordenado = [], casos_ordenado = [], recuperados, confirmados, ativos, obitos;
 
 function carregaDados() {
     $.ajax({
@@ -9,6 +9,7 @@ function carregaDados() {
             for (let i = 0; i < result.data.length; i++) {
                 estados_casos.push([result.data[i].uf, result.data[i].cases]);
             }
+
             estados_casos.sort();
 
             for (let i = 0; i < estados_casos.length; i++) {
@@ -18,6 +19,36 @@ function carregaDados() {
 
         }, error: function (error) {
             console.error('ERRO AO CARREGAR DADOS EM https://covid19-brazil-api.now.sh/api/report/v1');
+            console.error('ERRO: ', error);
+        },
+        async: false
+    });
+}
+
+function carregaDadosGeralBr() { 
+    $.ajax({
+        url: 'https://covid19-brazil-api.now.sh/api/report/v1/brazil',
+        type: 'GET',
+        contentType: 'application/json',
+        success: function (result) {
+                if (result.data.cases) {
+                    ativos = result.data.cases;
+                }
+
+                if (result.data.confirmed) {
+                    confirmados = result.data.confirmed;
+                }
+
+                if (result.data.recovered) {
+                    recuperados = result.data.recovered;
+                }
+
+                if (result.data.deaths) {
+                    obitos = result.data.deaths;
+                }
+
+        }, error: function (error) {
+            console.error('ERRO AO CARREGAR DADOS EM https://covid19-brazil-api.now.sh/api/report/v1/brazil');
             console.error('ERRO: ', error);
         },
         async: false
