@@ -177,6 +177,7 @@ function carregaMapa() {
     let map = L.map('map', {
         center: [-10.55, -52.75],
         zoom: 4,
+        zoomControl: false,
         minZoom: 4
     });
 
