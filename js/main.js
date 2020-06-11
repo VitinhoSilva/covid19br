@@ -6465,7 +6465,7 @@ function carregaMapa() {
         [-6.0410567572,-37.223983394],
         [-6.0421480942,-37.222687222]
     ]).addTo(map);
-    pb.bindPopup(`Paraíba: ✅ ${pb_confirmados}, &#x1f50e ${pb_suspeitos}, 💀 ${pb_obitos}`);
+    pb.bindPopup(`<strong style='color: #000000; margin-bottom: 50px;'>Paraíba</strong><br>✅ ${pb_confirmados}<br>&#x1f50e ${pb_suspeitos}<br>💀 ${pb_obitos}`);
 
     L.control.scale().addTo(map);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
