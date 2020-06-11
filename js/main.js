@@ -172,3 +172,23 @@ function carregaGraficoObitoUf() {
         
     });
 }
+
+function carregaMapa() {
+    let map = L.map('map', {
+        center: [-10.55, -52.75],
+        zoom: 4,
+        minZoom: 4
+    });
+
+    let polygon = L.polygon([
+        [51.509, -0.08],
+        [51.503, -0.06],
+        [51.51, -0.047]
+    ]).addTo(map);
+    polygon.bindPopup("ESTADO TAL");
+
+    L.control.scale().addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+}
